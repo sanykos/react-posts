@@ -1,11 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Posts from './components/posts'
 
-const App = () => {
+const App: React.FC = () => {
+
+
+
+
   return (
     <div id="app">
       <h1>Test</h1>
+      <Posts />
     </div>
   )
 }
