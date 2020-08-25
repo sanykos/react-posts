@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-//import { get } from 'lodash'
+import { get } from 'lodash'
 import axios from '../../axios/axios-jsonplaceholder'
 
 
@@ -14,8 +14,15 @@ const Posts: React.FC = (props) => {
                 axios.get<any[]>('/posts'),
                 axios.get<any[]>('/users'),
             ])
-            console.log(posts)     
+            posts.data.map((item) => {
+                //console.log(item.userId)
+             // console.log(get(users, 'data.id', item.userId))
+            })     
         })()
+
+        //console.log(posts)
+
+        
 
         
 
