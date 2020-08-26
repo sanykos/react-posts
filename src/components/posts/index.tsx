@@ -1,12 +1,19 @@
-import React, {useEffect} from 'react'
-import { get } from 'lodash'
+import React, { useState, useEffect } from 'react'
+import _ from 'lodash'
 import axios from '../../axios/axios-jsonplaceholder'
 
 
+interface Post {
+    body: string,
+    id: number,
+    title: string,
+    userId: number,
+    username: string
+}
 
 const Posts: React.FC = (props) => {
 
-   // const [postsList, setPostsList] = useState([])
+   const [postsList, setPostsList] = useState<Post[]>([])
 
     useEffect(() => {
        (async () => {
@@ -15,18 +22,17 @@ const Posts: React.FC = (props) => {
                 axios.get<any[]>('/users'),
             ])
             posts.data.map((item) => {
-                //console.log(item.userId)
-             // console.log(get(users, 'data.id', item.userId))
-            })     
+                let user = _.find(users.data, ['id', item.userId]);
+                item['username'] = user.name;
+            })
+            let { data } : any = posts;
+            //console.log(data)
+            setPostsList([data, ...postsList])
         })()
 
-        //console.log(posts)
-
-        
-
-        
-
     }, [])
+
+    //console.log(postsList)
 
 
     return (
