@@ -11,33 +11,42 @@ interface Post {
     username: string
 }
 
-const Posts: React.FC = (props) => {
+const Posts: React.FC = () => {
 
-   const [postsList, setPostsList] = useState<Post[]>([])
+  const [postsList, setPostsList] = useState<Post[]>([])
 
     useEffect(() => {
-       (async () => {
+        async function fetchData() {
             const [posts, users] = await Promise.all([
-                axios.get<any[]>('/posts'),
-                axios.get<any[]>('/users'),
-            ])
-            posts.data.map((item) => {
-                let user = _.find(users.data, ['id', item.userId]);
+                axios.get<Post[]>('/posts'),
+                axios.get<any>('/users'),
+            ]).then((response => {
+               return [
+                   response[0].data,
+                   response[1].data
+               ]               
+            }))
+    
+            posts.map((item : any) => {
+                let user = _.find(users, ['id', item.userId]);
                 item['username'] = user.name;
             })
-            let { data } : any = posts;
-            //console.log(data)
-            setPostsList([data, ...postsList])
-        })()
+
+            setPostsList(posts)
+        }
+
+        fetchData()
 
     }, [])
 
-    //console.log(postsList)
-
-
     return (
         <div className="" id="posts">
-            <h1>Posts</h1>
+            {
+                postsList.length > 0 && 
+                postsList.map(post => {
+                    console.log(post)
+                })
+            } 
         </div>
     )
 }
