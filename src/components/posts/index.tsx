@@ -60,22 +60,22 @@ const Posts: React.FC = () => {
  
     return (
         <>
-        <SearchInput onSearch={searchHandler}/>
-        <div className="" id="posts">
-            <ul>
-            {
-                data ? 
-                data.map((post, i) => (
+            <SearchInput onSearch={searchHandler}/>
+            <div className="" id="posts">
+                <ul>
+                {
+                    data ? 
+                    data.map((post, i) => (
+                        <li key={post.id + i}>{post.title}</li>
+                    ))
+                    :
+                    postsList.length > 0 && 
+                    postsList.map((post, i) => (
                     <li key={post.id + i}>{post.title}</li>
-                ))
-                :
-                postsList.length > 0 && 
-                postsList.map((post, i) => (
-                <li key={post.id + i}>{post.title}</li>
-                ))
-            } 
-            </ul>
-        </div>
+                    ))
+                } 
+                </ul>
+            </div>
         </>
     )
 }

@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 
-const SearchInput: React.FC<{onSearch(value: string):void}> = (props) => {
+
+interface SearchInputProps {
+    onSearch(value : string) : void
+}
+
+const SearchInput: React.FC<SearchInputProps> = (props) => {
 
     const [value, setValue] = useState<string>('');
 
