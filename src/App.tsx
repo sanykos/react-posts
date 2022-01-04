@@ -4,10 +4,10 @@ import Posts from './components/posts'
 
 const App: React.FC = () => {
 
-  
+
   return (
     <div id="app">
-      <h1>Test</h1>
+      <h1>Get Posts</h1>
       <Posts />
     </div>
   )
