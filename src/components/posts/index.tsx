@@ -13,7 +13,7 @@ const Posts: React.FC = () => {
 
     const getSearchData = () => {
         if (!search) {
-            return
+            return postsList;
         }
         return postsList?.filter(post => post.title.toUpperCase().includes(search.toUpperCase()))
     }
@@ -44,14 +44,7 @@ const Posts: React.FC = () => {
             <SearchInput onSearch={searchHandler} />
             <ul className="postsList">
                 {
-                    searchData ? searchData.map((post, i: number) => (<li key={post.userId + i}>{post.title}/{post.username}</li>))
-                        : postsList ?
-                            postsList.map((post, i: number) => (
-                                <li key={post.userId + i}>{post.title}/{post.username}</li>
-                            ))
-                            :
-                            <h1>Постов не завезли</h1>
-
+                    searchData?.map((post, i: number) => (<li key={post.userId + i}>{post.title}/{post.username}</li>))
                 }
             </ul>
         </div>
