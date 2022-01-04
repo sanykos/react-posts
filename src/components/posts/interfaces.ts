@@ -13,7 +13,7 @@ type Company = {
     name: string,
 }
 
-export type User = {
+type User = {
     address: Address
     company: Company
     email: string,
@@ -24,7 +24,7 @@ export type User = {
     website: string
 }
 
-export type Post = {
+type Post = {
     body: string,
     id: number,
     title: string,

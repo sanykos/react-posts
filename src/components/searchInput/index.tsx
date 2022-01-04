@@ -1,25 +1,28 @@
 import React, { useState } from 'react'
+import { SearchInputProps } from './interfaces';
 
 
-interface SearchInputProps {
-    onSearch(value : string) : void
-}
-
-const SearchInput: React.FC<SearchInputProps> = (props) => {
-
+const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
     const [value, setValue] = useState<string>('');
 
     const valueChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value)
     }
 
-    return(
+    const keyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onSearch(value)
+        }
+    }
+
+    return (
         <div className="input-group">
             <input type="text" placeholder="Поиск"
-            onChange={valueChangeHandler}
-            value={value}
+                onChange={valueChangeHandler}
+                value={value}
+                onKeyPress={keyPressHandler}
             />
-            <button type="button" onClick={() => props.onSearch(value)}>Поиск</button>
+            <button type="button" onClick={() => onSearch(value)}>Поиск</button>
         </div>
     )
 }

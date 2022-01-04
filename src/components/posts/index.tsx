@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react'
 import SearchInput from '../searchInput';
 import DataService from '../../services'
 
-import { Post, User, PostWithUser } from './interfaces';
+import { PostWithUser } from './interfaces';
 
 
 
 
 const Posts: React.FC = () => {
-
     const [postsList, setPostsList] = useState<PostWithUser[]>([]);
-    // const [usersList, setUsersList] = useState<(Post | User)[]>([])
-    const [search, setSearch] = useState<string>('')
+    const [search, setSearch] = useState<string>('');
 
-    // const getPosts = (userId: number) => {
-    //     return DataService.getById<Post>('/posts?userId', userId);
-    // }
-
+    const getSearchData = () => {
+        if (!search) {
+            return
+        }
+        return postsList?.filter(post => post.title.toUpperCase().includes(search.toUpperCase()))
+    }
 
     useEffect(() => {
         DataService.getAll<PostWithUser>().then(response => {
@@ -37,22 +37,25 @@ const Posts: React.FC = () => {
         setSearch(search)
     }
 
-    // console.log('postsList', postsList)
+    const searchData = getSearchData();
 
     return (
-        <>
+        <div className="posts" id="posts">
             <SearchInput onSearch={searchHandler} />
-            <div className="" id="posts">
-                <ul>
-                    {
-                        postsList?.map((post: PostWithUser, i: number) => (
-                            <li key={post.userId + i}>{post.title}/{post.username}</li>
-                        ))
+            <ul className="postsList">
+                {
+                    searchData ? searchData.map((post, i: number) => (<li key={post.userId + i}>{post.title}/{post.username}</li>))
+                        : postsList ?
+                            postsList.map((post, i: number) => (
+                                <li key={post.userId + i}>{post.title}/{post.username}</li>
+                            ))
+                            :
+                            <h1>Постов не завезли</h1>
 
-                    }
-                </ul>
-            </div>
-        </>
+                }
+            </ul>
+        </div>
+
     )
 }
 
